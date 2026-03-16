@@ -1,0 +1,13 @@
+name: LobbyNoData
+version: 1.0
+main: com.jeyers.lobbynodata.LobbyNoData
+api-version: 1.21
+commands:
+  lobbynodata:
+    description: LobbyNoData plugin command
+    usage: /<command> reload
+    permission: lobbynodata.reload
+permissions:
+  lobbynodata.reload:
+    description: Allows reloading of the LobbyNoData plugin config
+    default: op

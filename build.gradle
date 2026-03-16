@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id "xyz.jpenilla.run-paper" version "2.3.1"
+}
+
+group = 'com.jeyers'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT"
+}
+
+// Compile for Java 21
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(21)
+}
+
+tasks.processResources {
+    filteringCharset = 'UTF-8'
+    filesMatching("plugin.yml") {
+        expand(version: project.version)
+    }
+}
+
+// Force a proper JAR output
+tasks.jar {
+    archiveBaseName.set("LobbyNoData")
+    archiveVersion.set("1.0")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // Output folder (inside build/out-jars)
+    destinationDirectory.set(file("$buildDir/out-jars"))
+
+    doLast {
+        println("✅ Plugin JAR built at: ${archiveFile.get().asFile.absolutePath}")
+    }
+}
+
+// Ensure `build` depends on `jar`
+tasks.build {
+    dependsOn(tasks.jar)
+}
+
+// Run Paper server for testing
+tasks.runServer {
+    minecraftVersion("1.21.11")
+}

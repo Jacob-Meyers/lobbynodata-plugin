@@ -9,12 +9,17 @@ version = '1.0'
 repositories {
     mavenCentral()
     maven {
+        name = "spigot-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
         name = "papermc-repo"
         url = "https://repo.papermc.io/repository/maven-public/"
     }
 }
 
 dependencies {
+    //compileOnly "org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT" // Check SpigotMC for the latest version
     compileOnly "io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT"
 }
 
